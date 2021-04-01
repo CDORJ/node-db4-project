@@ -26,8 +26,10 @@ The requirements for the system as stated by the client are:
 
 After brainstorming with the team it is suggested that a **JSON representation** of a recipe _could_ look like the following:
 
-```json
-{
+<!-- 
+// NOTE each recipe can have many steps
+// NOTE each step could belong 
+ -->
   "recipe_id" : 1,
   "recipe_name": "Spaghetti Bolognese",
   "created_at": "2021-01-01 08:23:19.120",
