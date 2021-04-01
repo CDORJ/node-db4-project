@@ -3,7 +3,6 @@ exports.up = function (knex) {
     .createTable("recipes", (tbl) => {
       tbl.increments();
       tbl.string("recipe_name", 128).notNullable();
-      tbl.timestamp(false, true);
     })
     .createTable("ingredients", (tbl) => {
       tbl.increments();
