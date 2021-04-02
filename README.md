@@ -26,12 +26,10 @@ The requirements for the system as stated by the client are:
 
 After brainstorming with the team it is suggested that a **JSON representation** of a recipe _could_ look like the following:
 
-<!--
-// NOTE each recipe can have many steps
-// NOTE each step could belong to only 1 recipe  1:many
 
-//NOTE each ingredient can belong to multiple recipes
-//NOTE each recipe can have multiple ingredients  many:many - bridgeTable needed
+<!-- // NOTE each recipe can have many steps   1:many
+
+//NOTE all ingredients can belong to multiple recipes   many:many - bridgeTable needed
 
 
  -->
