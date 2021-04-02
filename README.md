@@ -26,36 +26,38 @@ The requirements for the system as stated by the client are:
 
 After brainstorming with the team it is suggested that a **JSON representation** of a recipe _could_ look like the following:
 
-<!-- 
+<!--
 // NOTE each recipe can have many steps
-// NOTE each step could belong to only 1 recipe  1:1
+// NOTE each step could belong to only 1 recipe  1:many
 
 //NOTE each ingredient can belong to multiple recipes
-//NOTE each recipe can multiple ingredients  many:many - bridgeTable needed
+//NOTE each recipe can have multiple ingredients  many:many - bridgeTable needed
 
 
  -->
-  "recipe_id" : 1,
-  "recipe_name": "Spaghetti Bolognese",
-  "created_at": "2021-01-01 08:23:19.120",
-  "steps": [
-    {
-      "step_id": 11,
-      "step_number": 1,
-      "step_instructions": "Put a large saucepan on a medium heat",
-      "ingredients": []
-    },
-    {
-      "step_id": 12,
-      "step_number": 2,
-      "step_instructions": "Add 1 tbsp olive oil",
-      "ingredients": [
-        { "ingredient_id": 27, "ingredient_name": "olive oil", "quantity": 0.014 }
-      ]
-    },
-  ]
+
+"recipe_id" : 1,
+"recipe_name": "Spaghetti Bolognese",
+"created_at": "2021-01-01 08:23:19.120",
+"steps": [
+{
+"step_id": 11,
+"step_number": 1,
+"step_instructions": "Put a large saucepan on a medium heat",
+"ingredients": []
+},
+{
+"step_id": 12,
+"step_number": 2,
+"step_instructions": "Add 1 tbsp olive oil",
+"ingredients": [
+{ "ingredient_id": 27, "ingredient_name": "olive oil", "quantity": 0.014 }
+]
+},
+]
 }
-```
+
+````
 
 The JSON representation above is the result of querying data from several tables using SQL joins, and then using JavaScript to hammer the data into that particular shape.
 
@@ -113,4 +115,4 @@ The representation **sent to the server** _could_ look like the following:
     },
   ]
 }
-```
+````
