@@ -28,7 +28,12 @@ After brainstorming with the team it is suggested that a **JSON representation**
 
 <!-- 
 // NOTE each recipe can have many steps
-// NOTE each step could belong 
+// NOTE each step could belong to only 1 recipe  1:1
+
+//NOTE each ingredient can belong to multiple recipes
+//NOTE each recipe can multiple ingredients  many:many - bridgeTable needed
+
+
  -->
   "recipe_id" : 1,
   "recipe_name": "Spaghetti Bolognese",
