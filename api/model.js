@@ -1,45 +1,57 @@
 const db = require("../data/db-config.js");
 
-async function getRecipeById(id) {
-  const recipe = await db("recipes as re")
-    .where({ "re.id": id })
-    .join("steps as st", "st.id", "re.id")
-    .leftJoin("recipes_ingredients as ri", "ri.id", "re.id")
-    .join("ingredients as in", "in.id", "ri.id")
+function getRecipe() {
+  return db("recipes");
+}
+
+async function getRecipeById(recipe_id) {
+  const recipe = await db
     .select(
-      "re.id",
-      "re.recipe_name",
-      "st.id",
+      "st.ste_id",
+      "rs.recipe_name",
       "st.step_number",
       "st.step",
-      "in.id",
-      "in.ingredient_name",
-      "ri.quantity"
+      "ing.ing_id",
+      "rec_ing.quantity",
+      "rs.rec_id"
     )
-    .groupBy("st.id")
-    .orderBy("st.step_number");
-  const recObj = {
-    recipe_id: recipe[0].id,
+    .from("recipes as rs")
+    .where({ "rs.rec_id": recipe_id })
+    .first()
+    .join("steps as st", "st.recipe_id", "rs.rec_id")
+    .join("ingredients as ing", "ing.ing_id", "rec_ing.ingredient_id")
+    .leftJoin(
+      "recipes_ingredients as rec_ing",
+      "rec_ing.recipe_id",
+      "rs.rec_id"
+    )
+    .groupBy("st.ste_id")
+    .orderBy("st.step");
+
+  const newObj = {
+    recipe_id: recipe[0].rec_id,
     recipe_name: recipe[0].recipe_name,
-    steps: recipe.map((step) => {
-      return {
-        step_id: step.step_id,
-        step_number: step.step_number,
-        step_instructions: step.step_instructions,
-        ingredients:
-          step[0].ingredients.id !== null
-            ? step.map((ingredients) => {
-                return {
-                  ingredient_id: ingredients.id,
-                  ingredient_name: ingredients.ingredient_name,
-                  quantity: ingredients.quantity,
-                };
-              })
-            : [],
-      };
-    }),
+    // steps: recipe.map((step) => {
+    //   return {
+    //     step_id: step.step_id,
+    //     step_number: step.step_number,
+    //     instructions: step.step,
+    // ingredients:
+    //   step.ing.id !== null
+    //     ? step.ing.map((ing) => {
+    //         return {
+    //           ingredient_id: ing.id,
+    //         };
+    //       })
+    //     : [],
   };
+  return newObj;
 }
+
+module.exports = {
+  getRecipe,
+  getRecipeById,
+};
 
 /* "recipe_id" : 1,
   "recipe_name": "Spaghetti Bolognese",

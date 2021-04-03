@@ -1,8 +1,11 @@
 const express = require("express");
 const helmet = require("helmet");
 const server = express();
+const recipeRouter = require("./router.js");
 
 server.use(express.json(), helmet());
+
+server.use("/api/food", recipeRouter);
 
 server.get("/", (req, res, next) => {
   res.status(200).json({ message: "api up" });
