@@ -3,7 +3,7 @@ exports.up = function (knex) {
     .createTable("recipes", (tbl) => {
       tbl.increments("rec_id");
       tbl.string("recipe_name", 128).notNullable();
-      tbl.date("created_at");
+      tbl.time("created_at", { precision: 6 });
     })
     .createTable("ingredients", (tbl) => {
       tbl.increments("ing_id");

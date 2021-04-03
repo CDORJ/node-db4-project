@@ -5,45 +5,37 @@ function getRecipe() {
 }
 
 async function getRecipeById(recipe_id) {
-  const recipe = await db
+  const recipe = await db("recipes as r")
+    .leftJoin("steps as s", "r.rec_id", "s.recipe_id")
+    .leftJoin("steps_ingredients as si", "si.step_id", "s.ste_id")
+    .leftJoin("ingredients as i", "i.ing_id", "si.ingredient_id")
     .select(
-      "st.ste_id",
-      "rs.recipe_name",
-      "st.step_number",
-      "st.step",
-      "ing.ing_id",
-      "rec_ing.quantity",
-      "rs.rec_id"
+      "r.rec_id",
+      "r.recipe_name",
+      "s.ste_id",
+      "s.step_number",
+      "s.step",
+      "i.ing_id",
+      "i.ingredient_name",
+      "si.quantity"
     )
-    .from("recipes as rs")
-    .where({ "rs.rec_id": recipe_id })
-    .first()
-    .join("steps as st", "st.recipe_id", "rs.rec_id")
-    .join("ingredients as ing", "ing.ing_id", "rec_ing.ingredient_id")
-    .leftJoin(
-      "recipes_ingredients as rec_ing",
-      "rec_ing.recipe_id",
-      "rs.rec_id"
-    )
-    .groupBy("st.ste_id")
-    .orderBy("st.step");
+    .groupBy("s.ste_id")
+    .orderBy("s.step_number")
+    .where("s.recipe_id", recipe_id);
 
   const newObj = {
     recipe_id: recipe[0].rec_id,
     recipe_name: recipe[0].recipe_name,
-    // steps: recipe.map((step) => {
-    //   return {
-    //     step_id: step.step_id,
-    //     step_number: step.step_number,
-    //     instructions: step.step,
-    // ingredients:
-    //   step.ing.id !== null
-    //     ? step.ing.map((ing) => {
-    //         return {
-    //           ingredient_id: ing.id,
-    //         };
-    //       })
-    //     : [],
+    steps:
+      recipe[0].step.id !== null
+        ? recipe.map((step) => {
+            return {
+              step_id: step.ste_id,
+              step_number: step.step_number,
+              step_instructions: step.step,
+            };
+          })
+        : [],
   };
   return newObj;
 }
