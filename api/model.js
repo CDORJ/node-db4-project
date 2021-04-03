@@ -33,6 +33,16 @@ async function getRecipeById(recipe_id) {
               step_id: step.ste_id,
               step_number: step.step_number,
               step_instructions: step.step,
+              // instructions:
+              //   step.ing_id !== null
+              //     ? step.si.map((ing) => {
+              //         return {
+              //           ingredients: ing.ing_id,
+              //           ingredients_name: ing.ingredient_name,
+              //           quantity: ing.step_instructions.quantity,
+              //         };
+              //       })
+              //     : [],
             };
           })
         : [],
