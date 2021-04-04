@@ -27,6 +27,14 @@ async function getRecipeById(recipe_id) {
     .groupBy("ing.ing_id");
 
   console.log(recipe, "recipe");
+  const ingArr = recipe.map((ing) => {
+    return {
+      ingredient_id: ing.ing_id,
+      ingredients: ing.ingredient_name,
+      quantity: ing.quantity,
+    };
+    return ingArr;
+  });
   const newObj = {
     recipe_id: recipe[0].rec_id,
     recipe_name: recipe[0].recipe_name,
@@ -35,11 +43,7 @@ async function getRecipeById(recipe_id) {
         step_id: step.ste_id,
         step_number: step.step_number,
         step_instructions: step.step,
-        ingredients: {
-          ingredient_id: step.ing_id,
-          ingredients: step.ingredient_name,
-          quantity: step.quantity,
-        },
+        ingredients: ingArr,
       };
     }),
   };
