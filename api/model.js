@@ -5,8 +5,6 @@ function getRecipe() {
 }
 
 async function getRecipeById(recipe_id) {
-  console.log("1");
-  // return db('recipes as r').where({"r.recipe_id": recipe_id}).first();
   const recipe = await db
     .select(
       "r.recipe_name",
@@ -26,7 +24,6 @@ async function getRecipeById(recipe_id) {
     .leftJoin("ingredients as ing", "ing.ing_id", "st_ing.ingredient_id")
     .groupBy("ing.ing_id");
 
-  console.log(recipe, "recipe");
   const ingArr = recipe.map((ing) => {
     return {
       ingredient_id: ing.ing_id,
